@@ -1,0 +1,35 @@
+﻿假定在观测区间上证指数的首日收盘价是P[1]，末日收盘价是P[n]。
+1. 如果在观测区间没有买卖且空仓，收益为0。
+2. 如果在观测区间没有买卖且持仓，收益为P[n]-P[1].
+3. 如果在观测区间只有一次卖，收益为卖出的前一日的收盘价P[s]-P[1]。
+4. 如果在观测区间只有一次买，收益为P[n] - 买入前一日的收盘价P[b]。
+5. 如果在观测区间有多次买卖且第一次操作是买，最后一次是买，则各事件时间顺序为
+      1...b1...s1...b2...s2......bm........n
+   收益为(P[s1] - P[b1]) + (P[s2] - P[b2]) + ... + (P[n] - P[bm])
+6. 如果在观测区间有多次买卖且第一次操作是买，最后一次是卖，则各事件时间顺序为
+      1...b1...s1...b2...s2......bm...sm...n
+   收益为(P[s1] - P[b1]) + (P[s2] - P[b2]) + ... + (P[sm] - P[bm])
+7. 如果在观测区间有多次买卖且第一次操作是卖，最后一次是买，则各事件时间顺序为
+      1........s1...b2...s2......bm........n
+   收益为(P[s1] - P[1]) + (P[s2] - P[b2]) + ... + (P[n] - P[bm])
+8. 如果在观测区间有多次买卖且第一次操作是卖，最后一次是卖，则各事件时间顺序为
+      1........s1...b2...s2......bm...sm...n
+   收益为(P[s1] - P[1]) + (P[s2] - P[b2]) + ... + (P[sm] - P[bm])
+
+
+# Define policy
+# macd_histogram = macd - macd_signal
+# MACD: histogram > 0 - BUY
+# MACD: Otherwise - SELL/HOLD???
+
+# KDJ: J > K > D - BUY
+# KDJ: J <= K <= D - SELL
+# KDJ: Otherwise - HOLD
+
+# EMA: f['Close'] > EMA(10) > EMA(30) > EMA(60) > EMA(90) - BUY
+# EMA: f['Close'] <= EMA(10) <= EMA(30) <= EMA(60) <= EMA(90) - SELL
+# EMA: Otherwise - HOLD
+
+# VMA: current day's volume surpasses its 5day and 10days moving average - BUY
+# VMA: current day's volume is lower than its 5day and 10days moving average - SELL
+# VMA: Otherwis - HOLD
